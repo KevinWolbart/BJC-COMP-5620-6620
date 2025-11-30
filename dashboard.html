@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>STEM Explorer Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+<div class="dashboard-wrapper">
+    <header class="dashboard-header">
+        <h1>Beauty And Joy Of Computing</h1>
+        <p>
+            Welcome back. Choose a course to start exploring computer science ideas with puzzles,
+            mini games, and short lessons. Each card shows how many lessons are in that course and
+            how far along you are.
+        </p>
+    </header>
+
+    <section class="summary-strip">
+        <div class="summary-card">
+            <div class="summary-label">Total Lessons</div>
+            <div class="summary-value" id="total-lessons"></div>
+            <div class="summary-hint">How many lessons were on the dashboard?</div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-label">Courses Available</div>
+            <div class="summary-value" id="courses-available"></div>
+            <div class="summary-hint">Pick any course card to expand its sections.</div>
+        </div>
+        <div class="summary-card">
+            <div class="summary-label">Tip</div>
+            <div class="summary-value">Try Algorithms</div>
+            <div class="summary-hint">It includes data structures and divide and conquer search.</div>
+        </div>
+    </section>
+
+    <section class="course-grid" id="course-grid">
+        <!-- Course cards will be injected here by JS -->
+    </section>
+
+    <div class="hint-strip">
+        <strong>Hint for your study tasks:</strong>
+        Try expanding the Algorithms and Abstraction cards. You can count lessons,
+        find the title of the second Algorithms section, see how many sections are in Abstraction,
+        list data structures, find divide and conquer algorithms, and read the definition
+        of a Binary Search Tree directly from this dashboard.
+    </div>
+</div>
+<script src="dashboard.js"></script>
+</body>
+</html>

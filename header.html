@@ -1,0 +1,65 @@
+<!-- header.html: Shared header for all pages -->
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    .menu-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #fff;
+        padding: 0 40px;
+        height: 70px;
+        box-shadow: 0 2px 12px rgba(229, 115, 115, 0.07);
+        border-radius: 0 0 18px 18px;
+        font-family: 'Nunito', sans-serif;
+        margin-bottom: 40px;
+        width: 1200px;
+    }
+    .menu-header .logo-title {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+    .menu-header .logo {
+        font-size: 2.2rem;
+        color: #e57373;
+    }
+    .menu-header .title {
+        font-weight: 800;
+        font-size: 1.5rem;
+        color: #2D3748;
+        letter-spacing: 1px;
+    }
+    .menu-header nav {
+        display: flex;
+        gap: 0px;
+    }
+    .menu-header nav a {
+        text-decoration: none;
+        color: #2D3748;
+        font-weight: 700;
+        font-size: 1.08rem;
+        padding: 8px 18px;
+        border-radius: 8px;
+        transition: background 0.18s, color 0.18s;
+    }
+    .menu-header nav a:hover, .menu-header nav a.active {
+        background: #e57373;
+        color: #fff;
+    }
+</style>
+
+<header class="menu-header">
+    <div class="logo-title">
+        <i class="fas fa-graduation-cap logo"></i>
+        <span class="title">Beauty And Joy of Computing</span>
+    </div>
+    <nav>
+        <a href="Algorithms.html">Algorithms</a>
+        <a href="#abstraction">Abstraction</a>
+        <a href="#data">Data</a>
+        <a href="#programming">Programming</a>
+        <a href="#about">About</a>
+    </nav>
+</header>

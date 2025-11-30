@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algo-Adventure: Algorithm Academy</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- CSS Variables for Theming --- */
+        :root {
+            --bg-color: #F5F7FA;
+            --card-bg: #FFFFFF;
+            --text-dark: #2D3748;
+            --text-light: #718096;
+            
+            /* Pastel Palette based on your image */
+            --color-intro: #E57373;   /* Coral */
+            --color-search: #81C784;  /* Moss Green */
+            --color-data: #4DB6AC;    /* Teal */
+            --color-sort: #9575CD;    /* Purple */
+            --color-chal: #FFB74D;    /* Orange */
+        }
+
+        /* --- Global Reset & Typography --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 0px 20px 20px 20px;
+        }
+
+        /* --- Header Section --- */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 2rem;
+            color: var(--text-dark);
+        }
+
+        p.subtitle {
+            color: var(--text-light);
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        /* --- Dashboard Container --- */
+        .dashboard {
+            background: white;
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+
+        /* --- Grid System --- */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        /* --- Card Styling --- */
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            min-height: 160px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+
+        .card i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .card span {
+            font-weight: 700;
+            font-size: 1.1rem;
+            line-height: 1.3;
+        }
+
+        /* Specific Card Colors */
+        .card.intro { background-color: var(--color-intro); }
+        .card.search { background-color: var(--color-search); }
+        .card.data { background-color: var(--color-data); }
+        .card.sort { background-color: var(--color-sort); }
+        .card.chal { background-color: var(--color-chal); }
+
+        /* --- Footer / Progress Bar --- */
+        .footer-bar {
+            position: fixed;
+            bottom: 20px;
+            background: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            z-index: 100;
+        }
+
+        .progress-info {
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .btn-next {
+            background: var(--text-dark);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+
+        .activity-box {
+            background: #F0F4F8;
+            padding: 15px;
+            border-radius: 12px;
+            border-left: 5px solid var(--text-dark);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+
+        .card-intro {
+            background: linear-gradient(135deg, #ffb6b9 0%, #fcd5ce 100%);
+            color: #2D3748;
+            padding: 2.5rem 2rem 2rem 2rem;
+            border-radius: 25px;
+            font-family: 'Nunito', sans-serif;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 8px 32px rgba(255, 183, 77, 0.15), 0 2px 8px rgba(229, 115, 115, 0.10);
+            position: relative;
+            overflow: hidden;
+            max-width: 1200px;
+            margin-top: 2.5rem;
+        }
+
+        .card-intro .top-row {
+            flex: 1 1 260px;
+            min-width: 100%;
+            
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.2rem;
+        }
+       
+        .card-intro h1 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: #ad2831; /* deeper red for better contrast */
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 8px #fff3, 0 1px 0 #0002;
+        }
+        .card-intro .robot-emoji {
+            font-size: 4rem;
+            margin-bottom: 0.5rem;
+            filter: drop-shadow(0 2px 8px #ffb74d44);
+        }
+        .card-intro h3 {
+            color: #f7ede3; /* even darker orange for maximum contrast */
+            font-size: 1.15rem;
+            margin-top: 1.2rem;
+            margin-bottom: 0.3rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-shadow: 0 1px 6px #fff2, 0 1px 0 #0002;
+        }
+        .card-intro ul {
+            margin-left: 1.2rem;
+            margin-bottom: 0.7rem;
+        }
+        .card-intro li {
+            margin-bottom: 0.3rem;
+        }
+        .card-intro .concept-box {
+            background: linear-gradient(90deg, #fffde4 60%, #ffe0e9 100%);
+            border-left: 7px solid #e57373;
+            padding: 18px 20px 12px 20px;
+            border-radius: 14px;
+            margin: 18px 0 18px 0;
+            box-shadow: 0 2px 8px #ffb74d22;
+        }
+        .card-intro .concept-box strong {
+            color: #e57373;
+            font-size: 1.08rem;
+        }
+        .card-intro .code-snippet {
+            background: #232946;
+            color: #f6c177;
+            font-family: 'Fira Mono', 'Courier New', monospace;
+            padding: 14px 18px;
+            border-radius: 10px;
+            text-align: left;
+            font-size: 1rem;
+            margin-top: 12px;
+            margin-bottom: 8px;
+            box-shadow: 0 1px 4px #23294633;
+        }
+        
+        @media (max-width: 800px) {
+            .card-intro .section-flex {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            .card-intro .left-col, .card-intro .right-col {
+                max-width: 100%;
+                min-width: 0;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="shared-header"></div>
+    <script>
+    fetch('header.html')
+        .then(response => response.text())
+        .then(data => {
+        document.getElementById('shared-header').innerHTML = data;
+        });
+    </script>
+
+    <header>
+        <i class="fas fa-graduation-cap" style="font-size: 3rem; color: #FFB74D; margin-bottom:10px;"></i>
+        <h1>Algo-Adventure</h1>
+        <p class="subtitle">Welcome, Explorer! Ready to code?</p>
+    </header>
+
+
+    <div class="dashboard">
+        <div class="section-title">Mission Control</div>
+        <div class="card-grid">
+            <div class="card intro" onclick="scrollToSection('intro-section')">
+                <i class="fas fa-robot"></i>
+                <span>The Recipe</span>
+            </div>
+            <div class="card search" onclick="scrollToSection('search-section')">
+                <i class="fas fa-search"></i>
+                <span>Divide & Conquer</span>
+            </div>
+            <div class="card data" onclick="scrollToSection('data-section')">
+                <i class="fas fa-layer-group"></i>
+                <span>Data Structures</span>
+            </div>
+            <div class="card sort" onclick="scrollToSection('sort-section')">
+                <i class="fas fa-chart-bar"></i>
+                <span>Sorting</span>
+            </div>
+            <div class="card chal" onclick="scrollToSection('chal-section')">
+                <i class="fas fa-trophy"></i>
+                <span>Boss Level</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Expanded Sections -->
+    <section id='intro-section' class="card-intro">
+        <div class="section-flex">
+            <div class="top-row">
+                <div class="robot-emoji"><i class="fas fa-robot"></i></div>
+                <h1>Intro to Algorithms</h1>
+            </div>
+            <div>
+                <h3>THE HOOK</h3>
+                <p>Have you ever made a peanut butter and jelly sandwich? Or followed a recipe? Or given someone directions? If so, you've already used an algorithm!</p>
+
+                <h3>WHAT IS AN ALGORITHM?</h3>
+                <p><strong>In Computer Science, an <em>algorithm</em> is a precise, step-by-step procedure for solving a problem or accomplishing a task.</strong> It's like a recipe for a computer: a list of instructions that, if followed exactly, always produce the correct result.</p>
+
+                <div class="concept-box">
+                    <strong>Why Do We Need Algorithms?</strong>
+                    <ul>
+                        <li>Computers can't improvise or guess—they need every step spelled out clearly.</li>
+                        <li>Algorithms allow us to automate tasks, solve problems efficiently, and build everything from simple calculators to complex apps like Google Maps or TikTok.</li>
+                        <li>Good algorithms can make programs faster, use less memory, and even save money or lives (think: air traffic control, medical devices, or self-driving cars).</li>
+                    </ul>
+                </div>
+
+                <h3>REAL-WORLD ANALOGY</h3>
+                <p>Imagine teaching a robot to tie its shoes. You can't just say "tie your shoes"—you must break it down into tiny, exact steps: grab the laces, cross them, pull tight, make a loop, etc. If you skip a step or are unclear, the robot will get stuck or make a mistake. This is why <strong>precision</strong> and <strong>order</strong> matter in algorithms.</p>
+
+                <div class="concept-box">
+                    <strong>Key Properties of Algorithms</strong>
+                    <ul>
+                        <li><strong>Input:</strong> What goes in (like numbers to add, or a list to sort).</li>
+                        <li><strong>Output:</strong> The result (like the sum, or the sorted list).</li>
+                        <li><strong>Definiteness:</strong> Each step is clear and unambiguous.</li>
+                        <li><strong>Finiteness:</strong> The process always ends after a finite number of steps.</li>
+                        <li><strong>Effectiveness:</strong> Each step is simple enough to actually do.</li>
+                    </ul>
+                </div>
+
+                <h3>EXAMPLES</h3>
+                <ul>
+                    <li><strong>Recipe:</strong> An algorithm for making cookies.</li>
+                    <li><strong>Directions:</strong> An algorithm for getting from your house to school.</li>
+                    <li><strong>Sorting:</strong> An algorithm for putting books in order by title.</li>
+                    <li><strong>Searching:</strong> An algorithm for finding a word in a dictionary.</li>
+                </ul>
+
+                <div class="concept-box">
+                    <strong>Sample Algorithm (Pseudocode):</strong>
+                    <div class="code-snippet">
+                        function findMax(numbers) {<br>
+                        &nbsp;&nbsp;max = numbers[0];<br>
+                        &nbsp;&nbsp;for each number in numbers {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;if (number > max) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;max = number;<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;return max;<br>
+                        }
+                    </div>
+                    <p>This algorithm finds the largest number in a list. Notice how every step is clear and nothing is left to chance!</p>
+                </div>
+
+                <h3>WHY STUDY ALGORITHMS?</h3>
+                <ul>
+                    <li>They are the foundation of all computer programs.</li>
+                    <li>They help us solve problems efficiently and creatively.</li>
+                    <li>Understanding algorithms makes you a better problem solver in life, not just in code!</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="search-section" class="card-intro" style="background: linear-gradient(135deg, #b2f7c1 0%, #e0f7ef 100%); box-shadow: 0 8px 32px rgba(129, 199, 132, 0.15), 0 2px 8px rgba(129, 199, 132, 0.10); border-left: 7px solid var(--color-search);">
+        <div class="section-flex">
+            <div class="top-row">
+                <div class="robot-emoji" style="filter: drop-shadow(0 2px 8px #81c78444); color: var(--color-search);"><i class="fas fa-search"></i></div>
+                <h1 style="color: #388e3c;">Divide & Conquer</h1>
+            </div>
+            <div>
+                <h3 style="color: #388e3c;">THE HOOK</h3>
+                <p>Imagine you have a giant phone book and need to find one name. Would you start at page 1 and check every name? Or would you flip to the middle, see if the name is before or after, and cut the book in half each time? That's the magic of Divide & Conquer!</p>
+
+                <h3 style="color: #388e3c;">WHAT IS DIVIDE & CONQUER?</h3>
+                <p><strong>Divide & Conquer is a powerful algorithmic strategy where you break a big problem into smaller, easier pieces, solve each piece, and then combine the answers.</strong> It's like solving a puzzle by working on small sections, then putting them together.</p>
+
+                <div class="concept-box" style="background: linear-gradient(90deg, #e8f5e9 60%, #b2f7c1 100%); border-left: 7px solid var(--color-search);">
+                    <strong style="color: var(--color-search);">Why Use Divide & Conquer?</strong>
+                    <ul>
+                        <li>It makes hard problems easier by breaking them down.</li>
+                        <li>It can make algorithms much faster (think: searching, sorting, even multiplying huge numbers!).</li>
+                        <li>It's the secret sauce behind famous algorithms like <strong>Binary Search</strong>, <strong>Merge Sort</strong>, and more.</li>
+                    </ul>
+                </div>
+
+                <h3 style="color: #388e3c;">REAL-WORLD ANALOGY</h3>
+                <p>Suppose you need to find a word in a dictionary. Instead of starting at "A" and flipping one page at a time, you open to the middle. If your word comes before that page, you only look in the first half. If after, you look in the second half. Each time, you cut the problem in half—super efficient!</p>
+
+                <div class="concept-box" style="background: linear-gradient(90deg, #e8f5e9 60%, #b2f7c1 100%); border-left: 7px solid var(--color-search);">
+                    <strong style="color: var(--color-search);">Key Steps of Divide & Conquer</strong>
+                    <ul>
+                        <li><strong>Divide:</strong> Split the problem into smaller subproblems.</li>
+                        <li><strong>Conquer:</strong> Solve each subproblem (sometimes using Divide & Conquer again!).</li>
+                        <li><strong>Combine:</strong> Put the solutions together to solve the original problem.</li>
+                    </ul>
+                </div>
+
+                <h3 style="color: #388e3c;">EXAMPLE: BINARY SEARCH</h3>
+                <p>Suppose you have a sorted list of numbers and want to find if a number is in the list. Instead of checking every number, you:</p>
+                <div class="concept-box" style="background: linear-gradient(90deg, #e8f5e9 60%, #b2f7c1 100%); border-left: 7px solid var(--color-search);">
+                    <strong style="color: var(--color-search);">Sample Algorithm (Pseudocode):</strong>
+                    <div class="code-snippet" style="background: #1b3c2e; color: #b9f6ca;">
+                        function binarySearch(list, target) {<br>
+                        &nbsp;&nbsp;if list is empty:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;return false<br>
+                        &nbsp;&nbsp;middle = middle index of list<br>
+                        &nbsp;&nbsp;if list[middle] == target:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;return true<br>
+                        &nbsp;&nbsp;else if target < list[middle]:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;search left half<br>
+                        &nbsp;&nbsp;else:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;search right half<br>
+                        }
+                    </div>
+                    <p style="color: #388e3c;">This method keeps cutting the list in half until it finds the answer or runs out of options. Super fast!</p>
+                </div>
+
+                <h3 style="color: #388e3c;">WHY STUDY DIVIDE & CONQUER?</h3>
+                <ul>
+                    <li>It helps you solve big problems by thinking smaller.</li>
+                    <li>It leads to some of the fastest algorithms in computer science.</li>
+                    <li>It's a strategy you can use in life: break big tasks into smaller steps!</li>
+                </ul>
+
+                <div class="activity-box" style="border-left: 5px solid var(--color-search); background: #e8f5e9;">
+                    <h4 style="color: #388e3c;"><i class="fas fa-gamepad"></i> Mini Game</h4>
+                    <p><strong>The High-Low Game:</strong> Find the hidden treasure in a sorted row of boxes using the fewest guesses possible. Try to "divide and conquer" instead of checking every box!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="data-section" class="card-intro" style="background: linear-gradient(135deg, #7de3e1 0%, #e0f7fa 100%); box-shadow: 0 8px 32px rgba(77, 182, 172, 0.15), 0 2px 8px rgba(77, 182, 172, 0.10); border-left: 7px solid var(--color-data); margin-top:40px;">
+        <div class="section-flex">
+            <div class="top-row">
+                <div class="robot-emoji" style="filter: drop-shadow(0 2px 8px #4db6ac44); color: var(--color-data);"><i class="fas fa-layer-group"></i></div>
+                <h1 style="color: #00897b;">Data Structures</h1>
+            </div>
+            <div>
+                <h3 style="color: #00897b;">THE HOOK</h3>
+                <p>Ever tried to organize your backpack, your closet, or even your phone apps? The way you arrange things can make life much easier—or much harder! That's the power of data structures.</p>
+
+                <h3 style="color: #00897b;">WHAT ARE DATA STRUCTURES?</h3>
+                <p><strong>Data structures are special ways to organize and store information so computers can use it efficiently.</strong> Just like you use shelves, drawers, or folders to keep things tidy, computers use data structures to keep data organized.</p>
+
+                <div class="concept-box" style="background: linear-gradient(90deg, #e0f7fa 60%, #7de3e1 100%); border-left: 7px solid var(--color-data);">
+                    <strong style="color: var(--color-data);">Why Do We Need Data Structures?</strong>
+                    <ul>
+                        <li>They help computers find, add, or remove information quickly.</li>
+                        <li>Choosing the right structure can make programs much faster and use less memory.</li>
+                        <li>They're the building blocks for everything from video games to search engines!</li>
+                    </ul>
+                </div>
+
+                <h3 style="color: #00897b;">REAL-WORLD ANALOGY</h3>
+                <p>Imagine a cafeteria: students line up for food (like a <strong>Queue</strong>—first in, first out), while trays are stacked up (like a <strong>Stack</strong>—last in, first out). Each way of organizing things has its own rules and best uses!</p>
+
+                <div class="concept-box" style="background: linear-gradient(90deg, #e0f7fa 60%, #7de3e1 100%); border-left: 7px solid var(--color-data);">
+                    <strong style="color: var(--color-data);">Common Data Structures</strong>
+                    <ul>
+                        <li><strong>Array:</strong> Like a row of lockers, each with a number.</li>
+                        <li><strong>Stack:</strong> Like a stack of pancakes—take the top one first (Last In, First Out).</li>
+                        <li><strong>Queue:</strong> Like a line at the movies—first in, first out.</li>
+                        <li><strong>Linked List:</strong> Like a treasure hunt, where each clue leads to the next.</li>
+                        <li><strong>Tree:</strong> Like a family tree, branching out from one ancestor.</li>
+                        <li><strong>Hash Table:</strong> Like a super-fast address book for looking things up.</li>
+                    </ul>
+                </div>
+
+                <h3 style="color: #00897b;">EXAMPLES</h3>
+                <ul>
+                    <li><strong>Stack:</strong> Undo history in a drawing app (last action undone first).</li>
+                    <li><strong>Queue:</strong> Print jobs waiting for the printer.</li>
+                    <li><strong>Array:</strong> High scores in a game, stored in order.</li>
+                </ul>
+
+                <div class="concept-box" style="background: linear-gradient(90deg, #e0f7fa 60%, #7de3e1 100%); border-left: 7px solid var(--color-data);">
+                    <strong style="color: var(--color-data);">Sample Stack Algorithm (Pseudocode):</strong>
+                    <div class="code-snippet" style="background: #17494d; color: #7de3e1;">
+                        stack = []<br>
+                        stack.push("plate1")<br>
+                        stack.push("plate2")<br>
+                        top = stack.pop()  // removes "plate2"<br>
+                    </div>
+                    <p style="color: #00897b;">Stacks let you add and remove items from the top only—just like a stack of trays!</p>
+                </div>
+
+                <h3 style="color: #00897b;">WHY STUDY DATA STRUCTURES?</h3>
+                <ul>
+                    <li>They make your programs faster and smarter.</li>
+                    <li>They're used everywhere in computer science.</li>
+                    <li>Understanding them helps you solve real-world problems, from organizing music playlists to building apps!</li>
+                </ul>
+
+                <div class="activity-box" style="border-left: 5px solid var(--color-data); background: #e0f7fa;">
+                    <h4 style="color: #00897b;"><i class="fas fa-gamepad"></i> Mini Game</h4>
+                    <p><strong>The Cafeteria Line:</strong> Sort students into the correct structure (Line up vs. Stack trays). Can you spot which is a stack and which is a queue?</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="sort-section" class="card-intro" style="background: linear-gradient(135deg, #b39ddb 0%, #ede7f6 100%); box-shadow: 0 8px 32px rgba(149, 117, 205, 0.15), 0 2px 8px rgba(149, 117, 205, 0.10); border-left: 7px solid var(--color-sort); margin-top:40px;">
+        <div class="section-flex">
+            <div class="top-row">
+                <div class="robot-emoji" style="filter: drop-shadow(0 2px 8px #9575cd44); color: var(--color-sort);"><i class="fas fa-chart-bar"></i></div>
+                <h1 style="color: #512da8;">Searching & Sorting</h1>
+            </div>
+            <div>
+                <h3 style="color: #512da8;">THE HOOK</h3>
+                <p>Ever tried to find your favorite shirt in a messy closet or put your books in order? Computers face the same challenges—finding and organizing information quickly!</p>
+
+                <h3 style="color: #512da8;">WHAT ARE SEARCHING & SORTING?</h3>
+                <p><strong>Searching</strong> means looking for something in a collection (like finding a contact in your phone). <strong>Sorting</strong> means putting things in order (like arranging books by title or number).</p>
+
+                <div class="concept-box" style="background: linear-gradient(90deg, #ede7f6 60%, #b39ddb 100%); border-left: 7px solid var(--color-sort);">
+                    <strong style="color: var(--color-sort);">Why Do We Need Them?</strong>
+                    <ul>
+                        <li>Searching helps us find information fast—think Google or your phone's search bar.</li>
+                        <li>Sorting makes searching even faster and keeps things organized.</li>
+                        <li>Many apps and websites use these algorithms behind the scenes every day!</li>
+                    </ul>
+                </div>
+
+                <h3 style="color: #512da8;">REAL-WORLD ANALOGY</h3>
+                <p>Imagine a library: if the books are in random order, finding one takes forever. If they're sorted by title or author, you can find any book in seconds. That's the magic of sorting and searching!</p>
+
+                <div class="concept-box" style="background: linear-gradient(90deg, #ede7f6 60%, #b39ddb 100%); border-left: 7px solid var(--color-sort);">
+                    <strong style="color: var(--color-sort);">Common Searching Algorithms</strong>
+                    <ul>
+                        <li><strong>Linear Search:</strong> Check each item one by one (like looking through a messy pile).</li>
+                        <li><strong>Binary Search:</strong> Quickly find an item in a sorted list by cutting the search space in half each time.</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box" style="background: linear-gradient(90deg, #ede7f6 60%, #b39ddb 100%); border-left: 7px solid var(--color-sort);">
+                    <strong style="color: var(--color-sort);">Sample Linear Search (Pseudocode):</strong>
+                    <div class="code-snippet" style="background: #2e294e; color: #b39ddb;">
+                        function linearSearch(list, target) {<br>
+                        &nbsp;&nbsp;for each item in list {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;if (item == target) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return true<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;return false<br>
+                        }
+                    </div>
+                    <p style="color: #512da8;">Linear search is simple but can be slow for big lists.</p>
+                </div>
+
+                <div class="concept-box" style="background: linear-gradient(90deg, #ede7f6 60%, #b39ddb 100%); border-left: 7px solid var(--color-sort);">
+                    <strong style="color: var(--color-sort);">Common Sorting Algorithms</strong>
+                    <ul>
+                        <li><strong>Bubble Sort:</strong> Compare and swap adjacent items until everything is in order (like bubbling up the biggest number).</li>
+                        <li><strong>Merge Sort:</strong> Divide the list, sort each part, then merge them together (uses Divide & Conquer!).</li>
+                    </ul>
+                </div>
+
+                <div class="concept-box" style="background: linear-gradient(90deg, #ede7f6 60%, #b39ddb 100%); border-left: 7px solid var(--color-sort);">
+                    <strong style="color: var(--color-sort);">Sample Bubble Sort (Pseudocode):</strong>
+                    <div class="code-snippet" style="background: #2e294e; color: #b39ddb;">
+                        function bubbleSort(list) {<br>
+                        &nbsp;&nbsp;repeat until no swaps {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;for i from 0 to length-2 {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (list[i] > list[i+1]) {<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;swap list[i] and list[i+1]<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                        &nbsp;&nbsp;}
+                        }
+                    </div>
+                    <p style="color: #512da8;">Bubble sort is easy to understand, but there are faster ways for big lists!</p>
+                </div>
+
+                <h3 style="color: #512da8;">WHY STUDY SEARCHING & SORTING?</h3>
+                <ul>
+                    <li>They help computers (and you!) find and organize information quickly.</li>
+                    <li>They're used in almost every app, website, and device.</li>
+                    <li>Understanding them makes you a better problem solver and coder.</li>
+                </ul>
+
+                <div class="activity-box" style="border-left: 5px solid var(--color-sort); background: #ede7f6;">
+                    <h4 style="color: #512da8;"><i class="fas fa-gamepad"></i> Mini Game</h4>
+                    <p><strong>Bubble Trouble:</strong> Click two adjacent bubbles to swap them until the numbers are in order. Can you sort the list in the fewest moves?</p>
+                    <div id="bubble-game" style="margin: 1em 0;"></div>
+                    <div id="bubble-moves" style="color: #512da8; font-weight: bold; margin-bottom: 0.5em;"></div>
+                    <button id="bubble-reset" style="background: #b39ddb; color: #fff; border: none; padding: 6px 16px; border-radius: 12px; font-family: 'Nunito', sans-serif; font-weight: 700; cursor: pointer;">Reset Game</button>
+                    <div id="bubble-badge" style="margin-top: 1em;"></div>
+                </div>
+                <!-- Confetti and Sound Effects -->
+                <audio id="badge-sound" src="https://cdn.pixabay.com/audio/2022/07/26/audio_124bfae5b6.mp3" preload="auto"></audio>
+                <audio id="correct-sound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_115b9b1bfa.mp3" preload="auto"></audio>
+                <canvas id="confetti-canvas" style="position:fixed;pointer-events:none;top:0;left:0;width:100vw;height:100vh;z-index:999;display:none;"></canvas>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="chal-section" class="card-intro" style="background: linear-gradient(135deg, #ffe0b2 0%, #fff3e0 100%); box-shadow: 0 8px 32px rgba(255, 183, 77, 0.15), 0 2px 8px rgba(255, 183, 77, 0.10); border-left: 7px solid var(--color-chal); margin-top:40px;">
+        <div class="section-flex">
+            <div class="top-row">
+                <div class="robot-emoji" style="filter: drop-shadow(0 2px 8px #ffb74d44); color: var(--color-chal);"><i class="fas fa-flag-checkered"></i></div>
+                <h1 style="color: #f57c00;">Conclusion & Quiz</h1>
+            </div>
+            <div>
+                <h3 style="color: #f57c00;">CONGRATULATIONS!</h3>
+                <p>You've explored the world of algorithms, data structures, searching, and sorting. These are the building blocks of computer science and the secret sauce behind every app, game, and website you use!</p>
+
+                <div class="concept-box" style="background: linear-gradient(90deg, #fff3e0 60%, #ffe0b2 100%); border-left: 7px solid var(--color-chal);">
+                    <strong style="color: var(--color-chal);">Key Takeaways</strong>
+                    <ul>
+                        <li><strong>Algorithms</strong> are step-by-step instructions for solving problems.</li>
+                        <li><strong>Divide & Conquer</strong> breaks big problems into smaller ones.</li>
+                        <li><strong>Data Structures</strong> organize information for speed and efficiency.</li>
+                        <li><strong>Searching & Sorting</strong> help us find and organize data quickly.</li>
+                    </ul>
+                </div>
+
+                <h3 style="color: #f57c00;">QUIZ: Test Your Knowledge!</h3>
+                                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%;">
+                                    <div id="quiz-cards-container" style="margin-top: 1.5rem; max-width: 500px; width: 100%; display: flex; flex-direction: column; align-items: center;">
+                                        <!-- Quiz cards will be injected here -->
+                                    </div>
+                                    <div style="display: flex; justify-content: center; align-items: center; margin-top: 1rem; max-width: 500px; width: 100%; gap: 1.5rem;">
+                                        <button id="prev-question" style="background: #ffd180; color: #f57c00; border: none; padding: 8px 18px; border-radius: 16px; font-family: 'Nunito', sans-serif; font-weight: 700; cursor: pointer;" disabled>Previous</button>
+                                        <span id="quiz-progress" style="font-weight: 600; color: #f57c00;">Question 1/5</span>
+                                        <button id="next-question" style="background: #ffd180; color: #f57c00; border: none; padding: 8px 18px; border-radius: 16px; font-family: 'Nunito', sans-serif; font-weight: 700; cursor: pointer;">Next</button>
+                                    </div>
+                                    <button id="submit-quiz" style="display:none; margin-top: 1.5rem; background: var(--color-chal); color: white; border: none; padding: 10px 20px; border-radius: 20px; font-family: 'Nunito', sans-serif; font-weight: 700; cursor: pointer;">Submit Answers</button>
+                                    <div id="quiz-result" style="margin-top: 1.5rem; font-weight: bold; color: #f57c00;"></div>
+                                </div>
+                                <script>
+                                // Quiz data
+                                const quizQuestions = [
+                                    {
+                                        question: 'What is an algorithm?',
+                                        name: 'q1',
+                                        options: [
+                                            { value: 'a', text: 'A type of computer' },
+                                            { value: 'b', text: 'A step-by-step way to solve a problem' },
+                                            { value: 'c', text: 'A video game' }
+                                        ]
+                                    },
+                                    {
+                                        question: 'Which data structure works like a line at the movies (first in, first out)?',
+                                        name: 'q2',
+                                        options: [
+                                            { value: 'a', text: 'Stack' },
+                                            { value: 'b', text: 'Queue' },
+                                            { value: 'c', text: 'Tree' }
+                                        ]
+                                    },
+                                    {
+                                        question: 'What does "Divide & Conquer" mean?',
+                                        name: 'q3',
+                                        options: [
+                                            { value: 'a', text: 'Breaking a problem into smaller parts' },
+                                            { value: 'b', text: 'Sorting numbers' },
+                                            { value: 'c', text: 'Playing a game' }
+                                        ]
+                                    },
+                                    {
+                                        question: 'Which algorithm checks every item one by one?',
+                                        name: 'q4',
+                                        options: [
+                                            { value: 'a', text: 'Binary Search' },
+                                            { value: 'b', text: 'Linear Search' },
+                                            { value: 'c', text: 'Bubble Sort' }
+                                        ]
+                                    },
+                                    {
+                                        question: 'What does Bubble Sort do?',
+                                        name: 'q5',
+                                        options: [
+                                            { value: 'a', text: 'Finds the largest number' },
+                                            { value: 'b', text: 'Swaps adjacent items until sorted' },
+                                            { value: 'c', text: 'Breaks a list in half' }
+                                        ]
+                                    }
+                                ];
+                                const quizAnswers = {q1: 'b', q2: 'b', q3: 'a', q4: 'b', q5: 'b'};
+                                let currentQuestion = 0;
+                                const userAnswers = {};
+
+                                function renderQuizCard(idx) {
+                                    const q = quizQuestions[idx];
+                                    let html = `<div class="quiz-card" style="background: #fffde7; border-radius: 18px; box-shadow: 0 2px 12px #ffecb366; padding: 1.5rem; min-height: 180px; display: flex; flex-direction: column; justify-content: center;">
+                                        <strong style='color: #f57c00;'>${idx+1}. ${q.question}</strong><br>`;
+                                    q.options.forEach(opt => {
+                                        const checked = userAnswers[q.name] === opt.value ? 'checked' : '';
+                                        html += `<label style='margin-top: 0.7em; display: block;'><input type='radio' name='${q.name}' value='${opt.value}' ${checked}> ${opt.text}</label>`;
+                                    });
+                                    html += `</div>`;
+                                    document.getElementById('quiz-cards-container').innerHTML = html;
+                                    document.getElementById('quiz-progress').innerText = `Question ${idx+1}/${quizQuestions.length}`;
+                                    document.getElementById('prev-question').disabled = idx === 0;
+                                    document.getElementById('next-question').style.display = idx === quizQuestions.length-1 ? 'none' : '';
+                                    document.getElementById('submit-quiz').style.display = idx === quizQuestions.length-1 ? '' : 'none';
+                                }
+
+                                // Save answer on selection
+                                document.addEventListener('change', function(e) {
+                                    if (e.target && e.target.name && e.target.name.startsWith('q')) {
+                                        userAnswers[e.target.name] = e.target.value;
+                                    }
+                                });
+
+                                document.getElementById('prev-question').onclick = function() {
+                                    if (currentQuestion > 0) {
+                                        currentQuestion--;
+                                        renderQuizCard(currentQuestion);
+                                    }
+                                };
+                                document.getElementById('next-question').onclick = function() {
+                                    if (currentQuestion < quizQuestions.length-1) {
+                                        currentQuestion++;
+                                        renderQuizCard(currentQuestion);
+                                    }
+                                };
+                                document.getElementById('submit-quiz').onclick = function() {
+                                    let score = 0;
+                                    for (let i = 0; i < quizQuestions.length; i++) {
+                                        const qn = quizQuestions[i].name;
+                                        if (userAnswers[qn] === quizAnswers[qn]) score++;
+                                    }
+                                    let msg = '';
+                                    if (score === quizQuestions.length) {
+                                        msg = 'Amazing! You got all 5 correct! <span style="font-size:2rem;">🎉</span><br><b>You earned the Quiz Master Badge!</b>';
+                                        playBadgeSound();
+                                        launchConfetti();
+                                    } else if (score >= 3) {
+                                        msg = `Great job! You scored ${score}/5.`;
+                                        playCorrectSound();
+                                    } else {
+                                        msg = `Keep practicing! You scored ${score}/5.`;
+                                    }
+                                    document.getElementById('quiz-result').innerHTML = msg;
+                                };
+        // --- Bubble Sort Mini-Game ---
+        const bubbleGameContainer = document.getElementById('bubble-game');
+        const bubbleMoves = document.getElementById('bubble-moves');
+        const bubbleBadge = document.getElementById('bubble-badge');
+        const bubbleReset = document.getElementById('bubble-reset');
+        let bubbleList = [];
+        let moves = 0;
+        let bubbleBadgeEarned = false;
+
+        function shuffle(arr) {
+            let a = arr.slice();
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        function renderBubbles() {
+            bubbleGameContainer.innerHTML = '';
+            bubbleList.forEach((num, i) => {
+                const bubble = document.createElement('button');
+                bubble.textContent = num;
+                bubble.style.margin = '0 8px';
+                bubble.style.width = '48px';
+                bubble.style.height = '48px';
+                bubble.style.borderRadius = '50%';
+                bubble.style.border = '2px solid #b39ddb';
+                bubble.style.background = '#ede7f6';
+                bubble.style.color = '#512da8';
+                bubble.style.fontWeight = 'bold';
+                bubble.style.fontSize = '1.2rem';
+                bubble.style.cursor = i < bubbleList.length - 1 ? 'pointer' : 'default';
+                bubble.disabled = i === bubbleList.length - 1;
+                bubble.onclick = () => swapBubbles(i);
+                bubbleGameContainer.appendChild(bubble);
+            });
+        }
+
+        function swapBubbles(i) {
+            if (i < bubbleList.length - 1) {
+                [bubbleList[i], bubbleList[i + 1]] = [bubbleList[i + 1], bubbleList[i]];
+                moves++;
+                renderBubbles();
+                updateMoves();
+                checkSorted();
+            }
+        }
+
+        function updateMoves() {
+            bubbleMoves.textContent = `Moves: ${moves}`;
+        }
+
+        // --- Badge Counter Logic ---
+        let badgeCount = 0;
+        const badgeCountSpan = document.getElementById('badge-count');
+        function incrementBadge() {
+            badgeCount++;
+            badgeCountSpan.textContent = badgeCount;
+        }
+
+        function checkSorted() {
+            if (bubbleList.every((v, i, a) => i === 0 || a[i - 1] <= v)) {
+                if (!bubbleBadgeEarned) {
+                    bubbleBadge.innerHTML = '<span style="font-size:2rem;">🏅</span> <b>You earned the Bubble Sort Badge!</b>';
+                    playBadgeSound();
+                    launchConfetti();
+                    bubbleBadgeEarned = true;
+                    incrementBadge();
+                }
+            }
+        }
+
+        function resetBubbleGame() {
+            bubbleList = shuffle([2, 4, 1, 5, 3]);
+            moves = 0;
+            bubbleBadge.innerHTML = '';
+            bubbleBadgeEarned = false;
+            renderBubbles();
+            updateMoves();
+        }
+
+        bubbleReset.onclick = resetBubbleGame;
+        resetBubbleGame();
+
+        // --- Confetti Animation ---
+        function launchConfetti() {
+            const canvas = document.getElementById('confetti-canvas');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            canvas.style.display = 'block';
+            const ctx = canvas.getContext('2d');
+            const confetti = [];
+            for (let i = 0; i < 120; i++) {
+                confetti.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * -canvas.height,
+                    r: 6 + Math.random() * 8,
+                    d: 2 + Math.random() * 4,
+                    color: `hsl(${Math.random()*360},80%,70%)`,
+                    tilt: Math.random() * 10 - 5
+                });
+            }
+            let frame = 0;
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                confetti.forEach(c => {
+                    ctx.beginPath();
+                    ctx.ellipse(c.x, c.y, c.r, c.r/2, c.tilt, 0, 2 * Math.PI);
+                    ctx.fillStyle = c.color;
+                    ctx.fill();
+                });
+                update();
+                frame++;
+                if (frame < 90) requestAnimationFrame(draw);
+                else canvas.style.display = 'none';
+            }
+            function update() {
+                confetti.forEach(c => {
+                    c.y += c.d;
+                    c.x += Math.sin(frame/10 + c.tilt);
+                });
+            }
+            draw();
+        }
+
+        // --- Sound Effects ---
+        function playBadgeSound() {
+            document.getElementById('badge-sound').play();
+        }
+        function playCorrectSound() {
+            document.getElementById('correct-sound').play();
+        }
+
+                                // Initial render
+                                renderQuizCard(currentQuestion);
+                                </script>
+            </div>
+        </div>
+    </section>
+
+    <div class="footer-bar">
+        <div class="progress-info" id="badge-progress">
+            <i class="fas fa-star" style="color: #FFB74D;"></i>
+            Progress: <span id="badge-count">0</span>/5 Badges
+        </div>
+        <button class="btn-next">Next Class ></button>
+    </div>
+
+
+
+    <script>
+        // Scroll to Section Function
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+    </script>
+</body>
+</html>
