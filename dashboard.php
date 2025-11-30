@@ -392,6 +392,8 @@ $totalLessons = array_sum(array_column($courses, 'lessons'));
                 <div class="course-actions">
                     <?php if ($course['id'] === 'programming'): ?>
                         <a class="primary-btn" href="programming.php">Start Course</a>
+                    <?php elseif ($course['id'] === 'algorithms'): ?>
+                        <a class="primary-btn" href="algorithms.html">Start Course</a>
                     <?php else: ?>
                         <button class="primary-btn" type="button">Start Course</button>
                     <?php endif; ?>
