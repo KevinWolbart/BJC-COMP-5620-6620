@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .page-wrapper { width: 100%; max-width: var(--login-max-width); padding: 12px; }
 
         .auth-card {
-            background: linear-gradient(135deg, #91e7abff 0%, #80dfcaff 100%);
+            background: linear-gradient(135deg, #f9a527ff 0%, #ffcb5bff 100%);
             border-radius: 20px;
             padding: 28px;
             box-shadow: 0 12px 40px rgba(0,0,0,0.08), 0 4px 12px rgba(229,115,115,0.06);
@@ -213,3 +213,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </main>
 </body>
 </html>
+
