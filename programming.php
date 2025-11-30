@@ -5,18 +5,20 @@ $sections = [
     1 => [
         'id' => 1,
         'title' => 'What Is a Program?',
-        'description' => 'See how computers follow instructions step by step, like a recipe.',
+        'description' => 'Learn how computers follow clear instructions, one step at a time, like following a recipe or building instructions.',
         'estimated_time' => '10–15 min',
-        'tagline' => 'Programs are step-by-step instructions a computer follows.',
+        'tagline' => 'Programs are precise instructions that tell a computer exactly what to do.',
         'summary' => [
-            'A program is like a recipe: it tells the computer exactly what to do, step by step.',
-            'Computers do not “guess” what you mean. They follow the instructions you give them exactly.',
-            'If an instruction is missing or unclear, the computer may do the wrong thing or show an error.'
+            'A program is like a recipe: it is a list of steps written in a language the computer understands.',
+            'Computers cannot think or fill in missing information. They only follow the instructions you give them exactly as they are written.',
+            'Every program has a goal, like moving a character, solving a math problem, or responding to a click.',
+            'Even tiny mistakes in a program can confuse the computer, which is why clear and complete instructions matter.'
         ],
         'examples' => [
-            'A program that moves a character 10 steps forward, then turns 15 degrees.',
-            'A program that adds two numbers and shows the answer.',
-            'A program that plays a sound when you click a button.'
+            'A program that shows a message like “Welcome!” when the page loads.',
+            'A program that checks your homework answer and tells you if it is correct.',
+            'A program that plays music when the space bar is pressed.',
+            'A program that makes a robot follow a straight line or turn when it sees a wall.'
         ],
         'quiz' => [
             [
@@ -51,18 +53,20 @@ $sections = [
     2 => [
         'id' => 2,
         'title' => 'Sequencing Instructions',
-        'description' => 'Put instructions in the right order to make animations and simple games work.',
+        'description' => 'Learn why instructions must be in the correct order for animations, games, and actions to work correctly.',
         'estimated_time' => '10–15 min',
-        'tagline' => 'The order of instructions matters a lot.',
+        'tagline' => 'The order of steps changes the result — even if you use the same steps.',
         'summary' => [
-            '“Sequencing” means putting instructions in the correct order.',
-            'If steps are out of order, the result can be weird or wrong (imagine putting on shoes before socks!).',
-            'In programming, we carefully choose which instruction comes first, second, third, and so on.'
+            '“Sequencing” means putting instructions in the correct order so the result makes sense.',
+            'Computers read code from top to bottom, doing each step one after another.',
+            'If steps are out of order, the result can be weird or wrong (imagine putting on shoes before socks).',
+            'Good sequencing helps your program run smoothly and do exactly what you expect.'
         ],
         'examples' => [
-            'Move forward, then turn, then jump.',
-            'Ask for the user’s name, then say “Hello” using that name.',
-            'Draw a background, then draw the character on top.'
+            'Show the background first, then show the characters so they appear on top.',
+            'Ask for the user’s name first, then say “Hello” using that name.',
+            'Start the game timer at the beginning of the game, not at the end.',
+            'Put on socks, then put on shoes — not the other way around!'
         ],
         'quiz' => [
             [
@@ -97,18 +101,20 @@ $sections = [
     3 => [
         'id' => 3,
         'title' => 'Loops and Repeating Actions',
-        'description' => 'Use loops to repeat actions instead of writing the same step over and over.',
+        'description' => 'Learn how loops repeat actions automatically so you do not have to write the same code over and over.',
         'estimated_time' => '15–20 min',
-        'tagline' => 'Loops repeat actions so you type less and do more.',
+        'tagline' => 'Loops repeat instructions efficiently.',
         'summary' => [
-            'A loop tells the computer to repeat a group of instructions.',
-            'Loops are useful when you want to do the same thing many times, like making a character walk or drawing a pattern.',
-            'Instead of copying and pasting the same code, you put it inside a loop.'
+            'A loop tells the computer to repeat a group of instructions multiple times.',
+            'Loops save time and keep your code shorter by avoiding copy-and-paste of the same steps.',
+            'Loops can repeat a set number of times or repeat until something happens.',
+            'Loops are useful for animations, character movement, patterns, score counting, and more.'
         ],
         'examples' => [
-            'Repeat 10 times: move 10 steps.',
-            'Repeat until the score reaches 5: add 1 to score.',
-            'Forever loop: keep checking if a key is pressed.'
+            'Repeat 10 times: move 10 steps to make a character walk forward.',
+            'Repeat 4 times: move and turn 90 degrees to draw a square.',
+            'Repeat until the score reaches 5: add 1 to score each time you collect a coin.',
+            'Forever: keep checking if a key is pressed so the character can move whenever the player wants.'
         ],
         'quiz' => [
             [
@@ -143,18 +149,21 @@ $sections = [
     4 => [
         'id' => 4,
         'title' => 'If Statements and Decisions',
-        'description' => 'Make your projects react to choices, scores, and user input.',
+        'description' => 'Learn how your projects can react to choices, scores, time, and user input using conditions.',
         'estimated_time' => '15–20 min',
-        'tagline' => 'If statements let your program make choices.',
+        'tagline' => 'If statements help your program choose what to do next.',
         'summary' => [
-            'An “if” statement checks a condition, like “Is the score greater than 10?”',
+            'An “if” statement checks a condition — something that can be true or false.',
             'If the condition is true, the computer runs the code inside the if block.',
-            'If the condition is false, it skips that block or uses an “else” block instead.'
+            'If the condition is false, the computer skips that block or uses an “else” block instead.',
+            'Conditions can check numbers, key presses, collisions, timers, and much more.',
+            'If statements make your programs interactive and allow them to respond to what is happening.'
         ],
         'examples' => [
-            'If the player touches a coin, increase the score.',
-            'If time left is 0, show “Game Over”.',
-            'If the space key is pressed, make the character jump.'
+            'If the player touches a coin, increase the score by 1.',
+            'If time left is 0, show “Game Over” and stop the game.',
+            'If the space key is pressed, make the character jump.',
+            'If the character reaches the finish line, go to the next level or show “You win!”.'
         ],
         'quiz' => [
             [
@@ -189,18 +198,21 @@ $sections = [
     5 => [
         'id' => 5,
         'title' => 'Debugging Your Code',
-        'description' => 'Learn how to find and fix bugs using simple strategies and checklists.',
+        'description' => 'Learn simple ways to find mistakes in your code and fix them using clear strategies.',
         'estimated_time' => '10–15 min',
-        'tagline' => 'Debugging means finding and fixing problems in your code.',
+        'tagline' => 'Debugging is the process of finding mistakes and fixing them.',
         'summary' => [
             'A “bug” is a mistake in your code that makes the program behave in a way you do not expect.',
             '“Debugging” is the process of finding those bugs and fixing them.',
-            'Good debuggers test their code often, read error messages, and change one thing at a time.'
+            'Common bugs include wrong order of instructions, missing blocks, incorrect numbers, or spelling mistakes in names.',
+            'Good debuggers test their code often, read error messages, and change one thing at a time.',
+            'Reading what the computer tried to do helps you understand where the problem is.'
         ],
         'examples' => [
-            'Adding a missing block so the character jumps when you press space.',
-            'Fixing a spelling mistake in a variable name.',
-            'Changing “move 100 steps” to “move 10 steps” so the sprite stays on the screen.'
+            'Adding a missing block so the character jumps when you press the space bar.',
+            'Fixing a spelling mistake in a variable name so the score starts to change correctly.',
+            'Changing “move 100 steps” to “move 10 steps” so the sprite stays on the screen.',
+            'Reordering instructions so the background loads before the characters appear.'
         ],
         'quiz' => [
             [
@@ -233,6 +245,7 @@ $sections = [
         ],
     ],
 ];
+
 
 // detect if we're in "lesson view"
 $lessonId = filter_input(
