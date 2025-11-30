@@ -32,16 +32,17 @@ $courses = [
         ]
     ],
     [
-        'id' => 'data',
-        'title' => 'Data and Variables',
+        'id' => 'programming',
+        'title' => 'Programming',
         'level' => 'Beginner',
-        'lessons' => 4,
+        'lessons' => 5,
         'progress' => 0,
         'sections' => [
-            'Numbers and Strings',
-            'Lists and Tables',
-            'Collecting Data',
-            'Visualizing Data'
+            'What Is a Program?',
+            'Sequencing Instructions',
+            'Loops and Repeating Actions',
+            'If Statements and Decisions',
+            'Debugging Your Code'
         ]
     ]
 ];
@@ -389,11 +390,17 @@ $totalLessons = array_sum(array_column($courses, 'lessons'));
                 </div>
 
                 <div class="course-actions">
-                    <button class="primary-btn">Start Course</button>
+                    <?php if ($course['id'] === 'programming'): ?>
+                        <a class="primary-btn" href="programming.php">Start Course</a>
+                    <?php else: ?>
+                        <button class="primary-btn" type="button">Start Course</button>
+                    <?php endif; ?>
+
                     <button class="ghost-btn toggle-sections" type="button">
                         Sections
                     </button>
                 </div>
+
 
                 <div class="sections-panel">
                     <h4>Sections</h4>
