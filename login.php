@@ -65,117 +65,115 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="css/site.css" />
    
     <style>
-        /* Merged dark theme: use dashboard colors + system font, keep login markup/classes */
+        /* --- CSS Variables for Theming (from algorithms page) --- */
         :root {
-            --bg: #0b1020;
-            --card-bg: #141b33;
-            --accent: #ffb347;
-            --accent-soft: #ffe3b3;
-            --text-main: #f4f4f8;
-            --text-soft: #b8bed6;
-            --danger: #f06f6f;
-            --radius: 12px;
-            --max-width: 420px;
-            --shadow-strong: 0 14px 40px rgba(0,0,0,0.45);
-            --shadow-soft: 0 8px 30px rgba(0,0,0,0.28);
+            --bg-color: #F5F7FA;
+            --card-bg: #FFFFFF;
+            --text-dark: #2D3748;
+            --text-light: #718096;
+
+            /* Pastel Palette */
+            --color-intro: #E57373;   /* Coral */
+            --color-search: #81C784;  /* Moss Green */
+            --color-data: #4DB6AC;    /* Teal */
+            --color-sort: #9575CD;    /* Purple */
+            --color-chal: #FFB74D;    /* Orange */
+
+            /* small helpers for login mapping */
+            --login-max-width: 460px;
         }
 
-        /* Base reset + font from dashboard CSS */
-        * { box-sizing: border-box; }
-        html,body { height: 100%; }
+        /* --- Global Reset & Typography --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            margin: 0;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background: radial-gradient(circle at top, #1d2750, #050814 60%);
-            color: var(--text-main);
+            font-family: 'Nunito', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(180deg, #f7fafc 0%, #eef2f7 100%);
+            color: var(--text-dark);
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            padding: 24px;
         }
 
-        /* Page wrapper keeps centered narrow card */
-        .page-wrapper { width: 100%; max-width: var(--max-width); padding: 24px; }
+        /* Reuse dashboard card aesthetics for login */
+        .page-wrapper { width: 100%; max-width: var(--login-max-width); padding: 12px; }
 
-        /* Card uses dark card-bg and larger radius like dashboard */
         .auth-card {
-            background: linear-gradient(180deg, var(--card-bg), #0f1730);
-            border-radius: var(--radius);
+            background: linear-gradient(135deg, #f9a527ff 0%, #ffcb5bff 100%);
+            border-radius: 20px;
             padding: 28px;
-            box-shadow: var(--shadow-strong);
-            border: 1px solid rgba(255,255,255,0.04);
-            transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.08), 0 4px 12px rgba(229,115,115,0.06);
+            border: 1px solid rgba(0,0,0,0.04);
+            transition: transform 0.12s ease, box-shadow 0.12s ease;
+            color: var(--text-dark);
         }
-        .auth-card:focus-within { transform: translateY(-2px); box-shadow: 0 18px 48px rgba(0,0,0,0.55); }
+        .auth-card:focus-within { transform: translateY(-3px); box-shadow: 0 18px 48px rgba(0,0,0,0.12); }
 
-        /* Title */
         .auth-title {
             margin: 0 0 12px;
-            font-size: 1.35rem;
-            font-weight: 700;
-            color: var(--text-main);
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #f1f1f1ff;
             letter-spacing: 0.002em;
+            text-shadow: 0 1px 0 rgba(75, 59, 59, 0.98);
         }
 
-        /* Form row & labels */
         .form-row { margin-bottom: 14px; display: flex; flex-direction: column; }
-        label { font-size: 13px; margin-bottom: 6px; color: var(--text-soft); font-weight: 600; }
+        label { font-size: 13px; margin-bottom: 6px; color: var(--text-dark); font-weight: 700; }
 
-        /* Inputs: dark background, subtle border */
+        /* Inputs styled to match bubbly theme */
         .input {
             padding: 12px 14px;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 14px;
-            background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-            border: 1px solid rgba(255,255,255,0.06);
-            color: var(--text-main);
+            background: linear-gradient(180deg, #ffffff, #fff6f6);
+            border: 1px solid rgba(173,40,49,0.08);
+            color: var(--text-dark);
             transition: box-shadow 0.12s ease, border-color 0.12s ease, transform 0.06s ease;
             outline: none;
         }
-        .input::placeholder { color: rgba(184,190,214,0.45); }
+        .input::placeholder { color: rgba(45,55,72,0.35); }
         .input:focus {
-            border-color: rgba(255,179,71,0.9);
-            box-shadow: 0 8px 26px rgba(255,179,71,0.08);
+            border-color: rgba(40, 135, 224, 0.9);
+            box-shadow: 0 8px 26px rgba(229,115,115,0.10);
             transform: translateY(-1px);
         }
 
-        /* Buttons adapted to accent */
-        .btn { display:inline-block; padding:10px 14px; border-radius:999px; border:0; cursor:pointer; font-weight:700; }
+        /* Buttons adapted to the pastel accent */
+        .btn { display:inline-block; padding:10px 14px; border-radius:999px; border:0; cursor:pointer; font-weight:800; }
         .btn-primary {
-            background: linear-gradient(90deg, var(--accent), #ffdf8a);
-            color: #20120a;
+            background: linear-gradient(90deg, var(--color-chal), #ffd89a);
+            color: #3b2a10;
             min-width: 110px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+            box-shadow: 0 10px 30px rgba(255,183,77,0.12);
             transition: transform 0.08s ease, box-shadow 0.12s ease;
         }
         .btn-primary:hover { transform: translateY(-2px); }
-        .btn:focus { outline: 3px solid rgba(255,179,71,0.12); outline-offset: 2px; }
+        .btn:focus { outline: 3px solid rgba(255,183,77,0.12); outline-offset: 2px; }
 
-        /* Messages / errors use danger color */
         .form-error {
-            color: var(--danger);
-            background: rgba(240,111,111,0.06);
-            border: 1px solid rgba(240,111,111,0.08);
+            color: #c53030;
+            background: rgba(229,115,115,0.07);
+            border: 1px solid rgba(229,115,115,0.08);
             padding: 10px 12px;
             border-radius: 10px;
             font-size: 13px;
             margin-bottom: 12px;
         }
 
-        /* Actions & helpers */
         .form-actions { display:flex; align-items:center; justify-content:space-between; margin-top:8px; gap: 12px; }
-        .muted { font-size:13px; color: var(--text-soft); }
-        a.small { font-size:13px; color: var(--accent-soft); text-decoration:none; }
-        a.small:hover { text-decoration: underline; color: var(--accent); }
+        .muted { font-size:13px; color: var(--text-light); }
+        a.small { font-size:13px; color: rgba(45,55,72,0.7); text-decoration:none; }
+        a.small:hover { text-decoration: underline; color: var(--text-dark); }
 
         input[required] { box-shadow: none; }
 
         @media (max-width: 480px) {
-            .auth-card { padding: 20px; border-radius: 14px; }
-            .auth-title { font-size: 1.15rem; }
-            .page-wrapper { padding: 12px; }
+            .auth-card { padding: 20px; border-radius: 16px; }
+            .auth-title { font-size: 1.2rem; }
+            .page-wrapper { padding: 10px; }
             .btn-primary { min-width: 90px; padding: 9px 12px; }
         }
     </style>
@@ -215,3 +213,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </main>
 </body>
 </html>
+
